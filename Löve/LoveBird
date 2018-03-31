@@ -1,0 +1,53 @@
+-- V1.0a AR
+-- 30.12.2016 16:02:26 AR V1.0b
+
+block.setSize(91, 31)
+
+generic = {
+  parameter = {
+  },
+
+  init = function(self)
+    block.setInputsPinCount(0)
+    block.setOutputsPinCount(0)
+    block.modifyFlags('IsEnabledSubSystem', true)
+    block.modifyFlags('SupressStartFunctionCall', true)
+    block.modifyFlags('SupressStopFunctionCall', true)
+  end,
+
+  open = function(self)
+    gui.add('HTMLInfo', 'Info', 'Web based debug console', [[
+A browser-based debug console from LÖVE<br><br>
+See <a href="https://github.com/rxi/lovebird">github.com/rxi/lovebird</a><br>
+Use a browser with this address: <a href="http://127.0.0.1:8000">127.0.0.1:8000</a><br>
+    ]])
+    gui.setSize()
+  end,
+
+  apply = function(self)
+  end,
+
+  close = function()
+  end,
+
+  avatar = function(self)
+    return block.getDefaultAvatar(0x50, "'LoveBird'")
+  end,
+
+  generate = function(self)
+    local source =
+      [==[
+        return {
+
+          step = function(a)
+            require("lovebird").update()
+            return true
+          end
+
+        }
+      ]==]
+    return source
+  end,
+
+}
+
